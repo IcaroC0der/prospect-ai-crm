@@ -1,0 +1,57 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Lead {
+  id                  String     @id @default(uuid())
+  name                String
+  contactPerson       String?
+  role                String?
+  phone               String?
+  whatsapp            String?
+  email               String?
+  city                String
+  state               String?    @default("SP")
+  segment             String
+  cnpj                String?
+  website             String?
+  instagram           String?
+  facebook            String?
+  linkedin            String?
+  googleMaps          String?
+  googleRating        Float?     @default(4.8)
+  googleReviewsCount  Int?       @default(120)
+  score               Int        @default(85)
+  status              String     @default("new")
+  pipelineStage       String     @default("pronto_para_contato")
+  summary             String
+  principalPain       String
+  opportunity         String
+  icebreaker          String
+  suggestedQuestions  String?
+  probableObjections  String?
+  conversionChance    String?
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  lastContactAt       DateTime?
+  nextFollowUpAt      DateTime?
+  calls               CallLog[]
+}
+
+model CallLog {
+  id              String   @id @default(uuid())
+  leadId          String
+  lead            Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  answered        Boolean
+  spokeWith       String?
+  durationSeconds Int?
+  interestLevel   String?
+  notes           String?
+  result          String?
+  createdAt       DateTime @default(now())
+}
