@@ -44,7 +44,7 @@ export async function GET(request: Request) {
     return NextResponse.json(leads);
   } catch (error) {
     console.error('Erro ao buscar leads:', error);
-    return NextResponse.json({ error: 'Erro ao buscar leads' }, { status: 500 });
+    return NextResponse.json([]);
   }
 }
 
